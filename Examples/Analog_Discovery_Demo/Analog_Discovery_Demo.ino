@@ -2,7 +2,7 @@
 // Andrew Lynch
 // 2/6/18
 
-#include "TimerOne.h"
+void outputNextNumber(void);
 
 void setup(void)
 {
@@ -10,24 +10,18 @@ void setup(void)
     {
         pinMode(i, OUTPUT);
     }
-    Timer1.initialize(100000);
-    Timer1.pwm(9, 512);
-    Timer1.attachInterrupt(Timer1_handler);
 }
 
 void loop(void)
 {
-    
-}
-
-int Timer1_count = 0;
-void Timer1_handler(void)
-{
-    Timer1_count = (Timer1_count + 1) & 0xF;
-    if(!Timer1_count)
+    for(int i = 0; i < 50; i++)
     {
-        outputNextNumber();
+        delay(10);
+        digitalWrite(13, HIGH);
+        delay(10);
+        digitalWrite(13, LOW);
     }
+    outputNextNumber();
 }
 
 int currentNumberOut = -1;
