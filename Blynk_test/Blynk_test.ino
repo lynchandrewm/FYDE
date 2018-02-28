@@ -38,15 +38,6 @@
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
 
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "51fd8e1456fc4a8da0a864f15748ed99";
-
-// Your WiFi credentials.
-// Set password to "" for open networks.
-char ssid[] = "fydetest";
-char pass[] = "fydetest";
-
 #define VirtualPin_Handler(pin_num) \
 BLYNK_WRITE(pin_num)                \
 {                                   \
@@ -58,21 +49,30 @@ BLYNK_WRITE(pin_num)                \
   Serial.println(param.asDouble()); \
 }                         
 
-VirtualPin_Handler(V1)
+char buf[500];
 
-void recvCred(void)
-{
-  
-}
+VirtualPin_Handler(V1)
 
 void setup()
 {
   // Debug console
   Serial.begin(9600);
+  Serial.readString().toCharArray(buf, 500);
+  std::string s = buf;
+  std::string delimiter = "~";
+  size_t pos = 0;
+  pos = s.find(delimiter);
+  std::string auth = s.substr(0, pos);
+  s.erase(0, pos + delimiter.length());
+  pos = s.find(delimiter);
+  std::string ssid = s.substr(0, pos);
+  s.erase(0, pos + delimiter.length());
+  std::string pass = s;
+  Serial.println(auth.c_str());
+  Serial.println(ssid.c_str());
+  Serial.println(pass.c_str());
 
-  recvCred();
-
-  Blynk.begin(auth, ssid, pass);
+  Blynk.begin(auth.c_str(), ssid.c_str(), pass.c_str());
   // You can also specify server:
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8442);
   //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8442);
