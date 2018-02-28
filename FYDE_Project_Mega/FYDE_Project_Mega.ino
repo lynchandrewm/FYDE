@@ -54,21 +54,22 @@ void setup() {
     ; // wait for serial port to connect. Needed for native USB port only
   }
 
-  delay(5000);  
-
   while (Serial1.available() <= 0) {
-    delay(15);
+    Serial1.println(token);
     Serial1.print("~");
     Serial1.print(ssid);
     Serial1.print("~");
     Serial1.print(pass);
-    Serial1.print("~");
-    Serial1.print("token");
-    Serial1.println("~");
   }
+
+  digitalWrite(led, HIGH);
 }
 
 void loop() {
   //!!!!! EDIT ME !!!!!
   //Please read section 5 in the top for directions
+  if (Serial1.available() > 0) {
+    int inByte = Serial1.read();
+    Serial.write(inByte); 
+  }
 }

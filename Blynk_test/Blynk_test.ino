@@ -57,7 +57,9 @@ void setup()
 {
   // Debug console
   Serial.begin(9600);
+  while(Serial.available() <= 0) { ; }
   Serial.readString().toCharArray(buf, 500);
+  Serial.println(buf);
   std::string s = buf;
   std::string delimiter = "~";
   size_t pos = 0;
