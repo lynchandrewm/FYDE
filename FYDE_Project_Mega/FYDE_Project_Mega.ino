@@ -37,7 +37,7 @@
 
 char ssid[] = "fydetest";  // your network SSID (name)
 char pass[] = "fYdEtEsT";  // your network password
-char token[] = "FYDETEST"; // your blynk password
+char token[] = "51fd8e1456fc4a8da0a864f15748ed99"; // your blynk password
 
 #define led 13
 
