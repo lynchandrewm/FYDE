@@ -49,12 +49,22 @@ BLYNK_WRITE(pin_num)                \
   Serial.println(param.asDouble()); \
 }                         
 
+BlynkTimer timer;
+
 char buf[500];
 char auth[] = "3267e5ebd9a14724862a96767a5f73b1";
 char ssid[] = "Beaubien";
 char pass[] = "bullybully";
 
 VirtualPin_Handler(V1)
+
+void SerialInput_to_BlynkApp(void)
+{
+  if(Serial.available() > 0)
+  {
+    Blynk.virtualWrite(V2, Serial.readString());
+  }
+}
 
 void setup()
 {
@@ -83,16 +93,19 @@ void setup()
 
   Blynk.begin(auth.c_str(), ssid.c_str(), pass.c_str());
   */
+  Serial.println("Serial connection success!");
 
   Blynk.begin(auth, ssid, pass);
   // You can also specify server:
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8442);
   //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8442);
+  timer.setInterval(1000L, SerialInput_to_BlynkApp);
 }
 
 void loop()
 {
   Blynk.run();
+  timer.run();
   // You can inject your own code or combine it with other sketches.
   // Check other examples on how to communicate with Blynk. Remember
   // to avoid delay() function!
