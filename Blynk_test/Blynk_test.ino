@@ -50,6 +50,9 @@ BLYNK_WRITE(pin_num)                \
 }                         
 
 char buf[500];
+char auth[] = "3267e5ebd9a14724862a96767a5f73b1";
+char ssid[] = "Beaubien";
+char pass[] = "bullybully";
 
 VirtualPin_Handler(V1)
 
@@ -57,6 +60,9 @@ void setup()
 {
   // Debug console
   Serial.begin(9600);
+  // This code attempts to get credentials from the MEGA
+  // currently with bugs
+  /*
   while(Serial.available() <= 0) { ; }
   Serial.readString().toCharArray(buf, 500);
   Serial.println(buf);
@@ -73,8 +79,12 @@ void setup()
   Serial.println(auth.c_str());
   Serial.println(ssid.c_str());
   Serial.println(pass.c_str());
+  
 
   Blynk.begin(auth.c_str(), ssid.c_str(), pass.c_str());
+  */
+
+  Blynk.begin(auth, ssid, pass);
   // You can also specify server:
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8442);
   //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8442);
